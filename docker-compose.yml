@@ -8,7 +8,11 @@ services:
             - mongodb
         volumes:
             - ./src:/monitor
-        command: python /monitor/index.py
+        command: python /monitor/monitor.py
         env_file: docker/environment
+        labels:
+            - amf=2020
     mongodb:
         image: mongo
+        labels:
+            - amf=2021
