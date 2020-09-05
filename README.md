@@ -9,21 +9,46 @@ Register AMF CPU usage.
 |-|-|-|-|
 amf_id | URL| integer| Uniq identifier of AMF service|
 cpu_usage| BODY | float | CPU usage in percentage|
+
 **Response**
+
 String 'OK'
 
 **Example of request**
 
 ``curl -X POST http://localhost:5000/entry/1234 -dcpu_usage=1.2345``
-***
+
+----
+
 ### GET /entries/<int:num_of_periods>
 Retrieve a ordered (creation date DESC) set of entries grouped by cofigured time window with size of *num_of_periods*.
 |Param|Location|Type|Description
 |-|-|-|-|
 num_of_periods | URL | integer| Quantity of periods to retriev|
+
+**Response**
+An array of grouped entries by time window.
+<pre>
+[
+  {
+    "_id": string - identifier of time window,
+    "count": int - total of entries,
+    "entries": [
+      {
+        "amf_id": int - identifier of AMF service,
+        "cpu_usage": float - CPU usage in percentage,
+        "created_at": string - date of usage registration
+      }
+    ]
+  }
+]
+</pre>
+
+**Example of request**
+
 ``curl http://localhost:5000/entries/2``
 
-<code>
+<pre>
 [
   {
     "_id": "200905134803",
@@ -58,7 +83,7 @@ num_of_periods | URL | integer| Quantity of periods to retriev|
     ]
   }
 ]
-</code>
+</pre>
 
 ## Pre reqs
 * Docker Engine - [How to install](https://docs.docker.com/engine/install/)
