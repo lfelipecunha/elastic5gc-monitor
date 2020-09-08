@@ -33,7 +33,9 @@ def new_entry(amf_id):
 
 @app.route('/entries/<int:num_of_intervals>', methods=['GET'])
 def get_entries(num_of_intervals):
-    entries = db.entries.aggregate([
+
+
+    aggregations = [
         {
             '$group': {
                 '_id': '$sequency',
@@ -49,7 +51,15 @@ def get_entries(num_of_intervals):
         {
             '$limit': num_of_intervals
         }
-    ])
+    ]
+
+
+    initial_sequency = request.args.get('initial_sequency', None)
+
+    if initial_sequency != None:
+        aggregations.insert(0, {'$match': {'sequency': { '$gte': initial_sequency}}})
+
+    entries = db.entries.aggregate(aggregations)
 
     result = []
     for seq in entries:
