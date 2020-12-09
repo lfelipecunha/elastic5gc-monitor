@@ -28,27 +28,28 @@ num_of_periods | URL | integer| Quantity of periods to retriev|
 
 **Response**
 An array of grouped entries by time window.
-<pre>
+
+```json
 [
   {
-    "_id": string - identifier of time window,
-    "count": int - total of entries,
+    "_id": string // identifier of time window,
+    "count": int //total of entries,
     "entries": [
       {
-        "amf_id": int - identifier of AMF service,
-        "cpu_usage": float - CPU usage in percentage,
-        "created_at": string - date of usage registration
+        "amf_id": int // identifier of AMF service,
+        "cpu_usage": float //CPU usage in percentage,
+        "created_at": string //date of usage registration
       }
     ]
   }
 ]
-</pre>
+```
 
 **Example of request**
 
 ``curl http://localhost:5000/entries/2``
 
-<pre>
+```json
 [
   {
     "_id": "200905134803",
@@ -83,24 +84,25 @@ An array of grouped entries by time window.
     ]
   }
 ]
-</pre>
+```
 
 ## Pre reqs
 * Docker Engine - [How to install](https://docs.docker.com/engine/install/)
 * Python 3.5 or superior
 * Flask 1.1.X
 
-# Env Vars
-|Variable|Type|Description|
-|-|-|-|
-|TIME_WINDOW| int | Time in seconds to segment data|
+# Config File
+
+```yml
+database_uri: mongo #URI from mongo database
+time_window: 2 # Time in seconds to segment data
+```
 
 
 ### Running on docker
-**Create environment file**
+**Config file**
 
-``cd docker && cp environment.sample enviroment``
->Change configs to match to your setup.
+Change configs locate at ``config/monitor.yml`` to match to your setup.
 
 **Running**
 

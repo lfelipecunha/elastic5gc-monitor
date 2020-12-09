@@ -1,14 +1,13 @@
 version: "3.5"
 services:
     monitor:
-        build: docker
+        build: .
         ports:
             - 5000:5000
         depends_on:
             - mongodb
         volumes:
-            - ./src:/monitor
-        command: python /monitor/monitor.py
-        env_file: docker/environment
+            - ./config/monitor.yml:/monitor/config/monitor.yml
+        command: python monitor.py --config config/monitor.yml
     mongodb:
         image: mongo

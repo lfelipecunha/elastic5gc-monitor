@@ -2,12 +2,21 @@ from flask import Flask, request, jsonify
 from pymongo import MongoClient
 import datetime
 import os
+import argparse
+import yaml
 
 app = Flask(__name__)
 
-client = MongoClient('mongodb://mongodb')
+parser = argparse.ArgumentParser(description='Elastic Monitor')
+parser.add_argument('--config', help="Configuration File")
+args = parser.parse_args()
+yml_file = open(os.path.abspath(os.path.join(os.path.abspath(__file__), '..', args.config)))
+config = yaml.load(yml_file, Loader=yaml.CLoader)
+
+
+client = MongoClient('mongodb://' + config.get('database_uri', ''))
 db = client.monitoring
-time_window = int(os.environ['TIME_WINDOW'])
+time_window = config.get('time_window', 2)
 
 def generate_sequency(date):
     seconds = int(date.strftime('%S'))
