@@ -1,2 +1,3 @@
+server_host: monitor.elastic5gc.local
 database_uri: mongo
 time_window: 2

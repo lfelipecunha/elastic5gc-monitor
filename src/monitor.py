@@ -42,8 +42,6 @@ def new_entry(amf_id):
 
 @app.route('/entries/<int:num_of_intervals>', methods=['GET'])
 def get_entries(num_of_intervals):
-
-
     aggregations = [
         {
             '$group': {
@@ -76,5 +74,5 @@ def get_entries(num_of_intervals):
 
     return jsonify(result)
 
-app.run(host='0.0.0.0', debug=True)
+app.run(host=config.get('server_host', '0.0.0.0'), debug=True)
 
